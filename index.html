@@ -1468,9 +1468,14 @@
             const promptTextarea = document.getElementById(promptTextareaId);
             const outputDiv = document.getElementById(outputDivId);
             const prompt = promptTextarea.value;
+            const apiKey = "AIzaSyDiqaUnPDBAgDyzv9taVXtFBASl17FcLM4";
 
             if (!prompt) {
                 showNotification("Por favor, insira um prompt.");
+                return;
+            }
+            if (!apiKey) {
+                showNotification("Por favor, insira a sua API Key da Google AI Studio no cabeçalho da página.");
                 return;
             }
 
@@ -1479,7 +1484,6 @@
             try {
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Leave empty for Canvas environment
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
                 const response = await fetch(apiUrl, {
