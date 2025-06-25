@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessão IA para Alta Direção - PGL39 - AESE</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .btn-primary {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #2c3e50;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #d8dde2;
+            transform: translateY(-2px);
+        }
+
+        .copy-btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .copy-btn:hover {
+            background: #1e3c72;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Session-Specific Styles */
+        #session-container .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        #session-container .timer-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #session-container .timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2a5298;
+        }
+        
+        #session-container .module-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        #session-container .module-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: #fff;
+            color: #2a5298;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        #session-container .module-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        #session-container .module-btn.active {
+            background: #2a5298;
+            color: white;
+        }
+        
+        #session-container .module-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        #session-container .module-content.active {
+            display: block;
+        }
+        
+        #session-container .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        #session-container .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+        
+        #session-container .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        #session-container .activity-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        #session-container .activity-time {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        #session-container .prompt-box {
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        #session-container .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+        
+        #session-container .comparison-table th {
+            background: #2a5298;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        #session-container .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        #session-container .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        #session-container .interactive-exercise {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        #session-container .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        #session-container .risk-item {
+            background: #ffebee;
+            border: 2px solid #ef5350;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #session-container .risk-item:hover {
+            background: #ef5350;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        #session-container .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        #session-container .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e9ecef;
+            z-index: 0;
+        }
+        
+        #session-container .progress-step {
+            background: white;
+            border: 3px solid #e9ecef;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #session-container .progress-step.completed {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+        
+        #session-container .progress-step.active {
+            background: #2a5298;
+            border-color: #2a5298;
+            color: white;
+            transform: scale(1.2);
+        }
+        
+        #session-container .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        #session-container .demo-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #session-container .demo-card:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        #session-container .canvas-container {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #session-container .canvas-container::before {
+            content: '🎯';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+        }
+        
+        #session-container textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        #session-container textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+        
+        #session-container .stat-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        #session-container .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+
+        #session-container .module-navigation-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        /* Toolkit-Specific Styles */
+        #toolkit-container {
+            display: none; /* Hidden by default */
+        }
+
+        #toolkit-container .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        #toolkit-container .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        #toolkit-container .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        #toolkit-container .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            color: #2a5298;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        #toolkit-container .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        #toolkit-container .tab-btn.active {
+            background: #2a5298;
+            color: white;
+        }
+        
+        #toolkit-container .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        #toolkit-container .tab-content.active {
+            display: block;
+        }
+        
+        #toolkit-container .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+        
+        #toolkit-container .section h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        #toolkit-container .section h3 {
+            color: #34495e;
+            margin: 20px 0 10px 0;
+            font-size: 18px;
+        }
+        
+        #toolkit-container .prompt-card {
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        #toolkit-container .prompt-card:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+            transition: all 0.3s;
+        }
+        
+        #toolkit-container .prompt-category {
+            background: #2a5298;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        #toolkit-container .comparison-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        #toolkit-container .ai-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #toolkit-container .ai-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+        }
+        
+        #toolkit-container .ai-card h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        #toolkit-container .feature-list {
+            text-align: left;
+            margin-top: 15px;
+        }
+        
+        #toolkit-container .feature-list li {
+            list-style: none;
+            padding: 5px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        #toolkit-container .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        #toolkit-container .checklist-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #toolkit-container .checklist-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        #toolkit-container .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        #toolkit-container .risk-level {
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        #toolkit-container .risk-high { background: #dc3545; color: white; }
+        #toolkit-container .risk-medium { background: #ffc107; color: #000; }
+        #toolkit-container .risk-low { background: #28a745; color: white; }
+        
+        #toolkit-container .framework-phase {
+            background: white;
+            border: 2px solid #2a5298;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        #toolkit-container .framework-phase h4 { color: #2a5298; margin-bottom: 15px; }
+        
+        #toolkit-container .phase-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #2a5298;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        #toolkit-container .linkedin-box {
+            background: #0077B5;
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        #toolkit-container .download-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        #toolkit-container .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background: #2c3e50;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 2000;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            #session-container .module-nav, #toolkit-container .nav-tabs {
+                flex-direction: column;
+            }
+            
+            #session-container .timer-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            #session-container .comparison-table { font-size: 14px; }
+        }
+
+        @media print {
+            .footer, .timer-container, .module-nav, .progress-tracker, .copy-btn, #toolkit-container .nav-tabs, #toolkit-container .download-section, #toolkit-container .header .btn-primary {
+                display: none !important;
+            }
+            body { padding-bottom: 0 !important; }
+            #session-container, #toolkit-container { display: block !important; }
+            .module-content, .tab-content {
+                display: block !important;
+                animation: none !important;
+                page-break-after: always;
+            }
+            .tab-content:last-of-type { page-break-after: auto; }
+        }
+    </style>
+</head>
+<body style="padding-bottom: 80px;"> <!-- Add padding to prevent footer overlap -->
+
+    <!-- Main Session Container -->
+    <div id="session-container">
+        <div class="container">
+            <div class="header">
+                <h1 style="font-size: 2.5rem;">Melhorias de produtividade utilizando a Inteligência Artificial</h1>
+                <p style="margin-top: 10px; opacity: 0.9; font-size: 1.2rem;">Sessão Interativa para Alta Direção - AESE Business School</p>
+                <div style="margin-top: 20px; font-size: 1rem; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px;">
+                    <p><strong>Curso:</strong> PGL39 | <strong>Data:</strong> 25 de junho de 2025</p>
+                    <p><strong>Formador:</strong> Daniel Ferreira Polónia</p>
+                </div>
+            </div>
+            
+            <div class="timer-container">
+                <span>⏱️</span>
+                <div class="timer" id="timer">75:00</div>
+                <button onclick="toggleTimer(event)" class="btn-primary" style="padding: 8px 16px; font-size: 14px;">Pausar</button>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="progress-step active" onclick="showModule(1)">1</div>
+                <div class="progress-step" onclick="showModule(2)">2</div>
+                <div class="progress-step" onclick="showModule(3)">3</div>
+                <div class="progress-step" onclick="showModule(4)">4</div>
+                <div class="progress-step" onclick="showModule(5)">5</div>
+            </div>
+            
+            <div class="module-nav">
+                <button class="module-btn active" onclick="showModule(1)">🎯 Módulo 1: Desmistificação (10min)</button>
+                <button class="module-btn" onclick="showModule(2)">💡 Módulo 2: Laboratório I (20min)</button>
+                <button class="module-btn" onclick="showModule(3)">🚀 Módulo 3: Casos Avançados (15min)</button>
+                <button class="module-btn" onclick="showModule(4)">🎨 Módulo 4: Laboratório II (20min)</button>
+                <button class="module-btn" onclick="showModule(5)">🎖️ Módulo 5: Síntese & Futuro (10min)</button>
+            </div>
+            
+            <!-- Módulo 1 -->
+            <div class="module-content active" id="module1">
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🎬 Abertura com Impacto</h2>
+                        <span class="activity-time">2 minutos</span>
+                    </div>
+                    <p><strong>Provocação:</strong> "Quantos de vocês passaram mais de 30 minutos esta semana a redigir um email importante?"</p>
+                    <div class="interactive-exercise">
+                        <p>📊 <strong>Demonstração ao Vivo:</strong> Submeter em paralelo nos 3 assistentes:</p>
+                        <div class="prompt-box">
+                            Redige um email profissional sobre reestruturação do departamento de vendas, comunicando a fusão de duas equipas, mantendo tom positivo e motivador. Máximo 150 palavras.
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🔍 Demonstração Comparativa</h2>
+                        <span class="activity-time">5 minutos</span>
+                    </div>
+                    <div class="demo-container">
+                        <div class="demo-card" onclick="openAITool('chatgpt')"><h3>ChatGPT</h3><p>Estruturado & Didático</p></div>
+                        <div class="demo-card" onclick="openAITool('claude')"><h3>Claude</h3><p>Analítico & Cauteloso</p></div>
+                        <div class="demo-card" onclick="openAITool('gemini')"><h3>Gemini</h3><p>Sintético & Visual</p></div>
+                    </div>
+                    <div class="prompt-box" style="margin-top: 20px;">
+                        Analisa os principais riscos de expansão para o mercado espanhol de uma empresa portuguesa de retalho alimentar com 50 lojas e 500 colaboradores.
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🧠 O Consultor Júnior Digital</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <h3>Analogia Prática dos LLMs:</h3>
+                    <ul style="margin: 15px 0; padding-left: 25px;">
+                        <li>✅ Acesso a biblioteca vastíssima de conhecimento</li>
+                        <li>✅ Articula ideias de forma coerente</li>
+                        <li>❌ Sem experiência específica na vossa empresa</li>
+                        <li>❌ Sem acesso aos vossos dados internos</li>
+                        <li>⚠️ Pode "alucinar" - inventar dados plausíveis mas incorretos</li>
+                    </ul>
+                    <div class="stat-box">
+                        <span class="stat-number">75%</span>
+                        <p>das empresas esperam implementar IA generativa nos próximos 3 anos</p>
+                        <small>(McKinsey, 2024)</small>
+                    </div>
+                </div>
+                <div class="module-navigation-footer" style="justify-content: flex-end;">
+                    <button class="btn-primary" onclick="showModule(2)">Próximo Módulo &rarr;</button>
+                </div>
+            </div>
+            
+            <!-- Módulo 2 -->
+            <div class="module-content" id="module2">
+                 <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">⚡ Desafio Prático em Grupo</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <div class="interactive-exercise">
+                        <h3>🎯 Desafio Universal:</h3>
+                        <p style="font-size: 18px; font-weight: 600; margin: 15px 0;">
+                            "A vossa empresa precisa de implementar um sistema de gestão de prioridades que reduza o tempo em reuniões improdutivas em 30%"
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;"><strong>Grupo 1</strong><br>ChatGPT</div>
+                            <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;"><strong>Grupo 2</strong><br>Claude</div>
+                            <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;"><strong>Grupo 3</strong><br>Gemini</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🔧 Framework CRISP para Prompts</h2>
+                        <span class="activity-time">12 minutos</span>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 12px;">
+                        <h3>Construa prompts eficazes com o método CRISP:</h3>
+                        <div style="margin-top: 20px;">
+                            <p><strong>C</strong>ontexto: "Sou diretor de operações numa empresa de logística com 200 colaboradores..."</p>
+                            <p><strong>R</strong>ole: "Atua como um consultor especialista em produtividade organizacional..."</p>
+                            <p><strong>I</strong>nstruções: "Cria um template de agenda para reuniões de 30 minutos..."</p>
+                            <p><strong>S</strong>aída: "O resultado deve incluir checklist pré-reunião e métricas de sucesso..."</p>
+                            <p><strong>P</strong>arâmetros: "Considera contexto português e equipas multiculturais..."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-box" style="margin-top: 20px;">
+                        Contexto: Sou [cargo] numa empresa [setor] com [dimensão].
+                        Role: Atua como consultor especialista em produtividade com 20 anos experiência.
+                        Instruções: Cria um sistema completo de gestão de reuniões eficazes.
+                        Saída: Include agenda-tipo, checklist preparação, e KPIs de eficácia.
+                        Parâmetros: Máximo 30min/reunião, contexto empresarial português.
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copiar Template</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">📊 Matriz de Comparação</h2>
+                        <span class="activity-time">5 minutos</span>
+                    </div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Modelo IA</th><th>Tempo Resposta</th><th>Clareza (1-5)</th><th>Aderência (1-5)</th><th>Melhor Para</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>ChatGPT</strong></td><td>~10s</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>Estruturação, Código</td></tr>
+                            <tr><td><strong>Claude</strong></td><td>~15s</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>Análise, Textos Longos</td></tr>
+                            <tr><td><strong>Gemini</strong></td><td>~8s</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>Síntese, Multimodal</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="module-navigation-footer">
+                    <button class="btn-secondary" onclick="showModule(1)">&larr; Módulo Anterior</button>
+                    <button class="btn-primary" onclick="showModule(3)">Próximo Módulo &rarr;</button>
+                </div>
+            </div>
+            
+            <!-- Módulo 3 -->
+            <div class="module-content" id="module3">
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">📖 História Real de Transformação</h2>
+                        <span class="activity-time">2 minutos</span>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px;">
+                        <h3>💡 Caso PME Aveiro:</h3>
+                        <p style="font-size: 18px; margin-top: 15px;">Empresa de logística reduziu planeamento de rotas de <strong>4 horas → 45 minutos</strong></p>
+                        <p style="margin-top: 10px;">Segredo: Excel com histórico + prompts iterativos no Gemini</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🏥 Demo Setor Saúde/Farmacêutica</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <div class="prompt-box">
+                        És um farmacêutico comunitário português com 15 anos de experiência, especializado em comunicação clara com população idosa. Cria um protocolo de comunicação sobre um novo medicamento para hipertensão, considerando: - Regulamentação portuguesa (Infarmed) - Linguagem acessível para +65 anos - Aspectos de segurança e contraindicações - Formato A5 para impressão
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Técnica:</strong> Role Stacking - Adicionar camadas de contexto específico</p>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🛒 Demo Retalho/Distribuição</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <div class="prompt-box">
+                        Analisa sazonalidade de vendas para os seguintes produtos no mercado português: Exemplo histórico: - Gelados: Pico Junho-Agosto (+180%) - Bacalhau: Pico Dezembro (+220%) - Material escolar: Pico Setembro (+150%) Com base nestes padrões, prevê sazonalidade para: 1. Produtos de churrasco 2. Vinhos do Porto 3. Chocolates premium. Considera clima português e festividades locais. Formato: tabela exportável para Excel.
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Técnica:</strong> Few-shot Learning - Fornecer exemplos para o modelo aprender o padrão</p>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">💼 Demo Serviços Profissionais</h2>
+                        <span class="activity-time">4 minutos</span>
+                    </div>
+                    <div class="prompt-box">
+                        PASSO 1: Analisa o contexto do cliente. Cliente: Empresa têxtil, 500 funcionários, exporta 80% para UE. Desafio: Reduzir custos energéticos em 25% mantendo produção. PASSO 2: Estrutura a proposta. Cria estrutura de proposta consultoria com: sumário executivo, diagnóstico, soluções propostas, cronograma, investimento. PASSO 3: Desenvolve cada secção. [Executar sequencialmente cada parte]. PASSO 4: Revê coerência global. Verifica alinhamento entre secções e consistência de dados.
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Técnica:</strong> Chain Prompting - Dividir tarefas complexas em etapas sequenciais</p>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">💡 Reflexão Crítica</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr><th>Técnica</th><th>Quando Usar</th><th>Armadilha a Evitar</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Role Stacking</strong></td><td>Necessita expertise específica</td><td>Papéis contraditórios</td></tr>
+                            <tr><td><strong>Few-shot Learning</strong></td><td>Padrões a replicar</td><td>Exemplos enviesados</td></tr>
+                            <tr><td><strong>Chain Prompting</strong></td><td>Tarefas complexas/longas</td><td>Perder contexto entre passos</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="module-navigation-footer">
+                    <button class="btn-secondary" onclick="showModule(2)">&larr; Módulo Anterior</button>
+                    <button class="btn-primary" onclick="showModule(4)">Próximo Módulo &rarr;</button>
+                </div>
+            </div>
+            
+            <!-- Módulo 4 -->
+            <div class="module-content" id="module4">
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🎯 Reflexão Individual</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <div class="canvas-container">
+                        <h3>Identifique o SEU Desafio:</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                            <div>
+                                <label style="font-weight: 600; color: #ffc107;">📌 Post-it Amarelo:</label>
+                                <textarea rows="3" placeholder="UM processo que lhe rouba +2h/semana..."></textarea>
+                            </div>
+                            <div>
+                                <label style="font-weight: 600; color: #4caf50;">📌 Post-it Verde:</label>
+                                <textarea rows="3" placeholder="Que dados/informação tem sobre este processo..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">3-5h</span>
+                        <p>ganho semanal reportado por executivos que dominam IA</p>
+                        <small>= 30 dias úteis/ano</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🚀 Desenvolvimento de Prompt Personalizado</h2>
+                        <span class="activity-time">12 minutos</span>
+                    </div>
+                    <div class="canvas-container">
+                        <h3>Construa o SEU Prompt com CRISP:</h3>
+                        <div style="margin-top: 20px;">
+                            <label><strong>Contexto:</strong></label><textarea rows="2" placeholder="Sou [cargo] numa empresa [setor] com [dimensão]..."></textarea>
+                            <label style="margin-top: 15px; display: block;"><strong>Role:</strong></label><textarea rows="2" placeholder="Preciso que atues como [especialista específico]..."></textarea>
+                            <label style="margin-top: 15px; display: block;"><strong>Instruções:</strong></label><textarea rows="2" placeholder="Analisa/Cria/Desenvolve [tarefa específica]..."></textarea>
+                            <label style="margin-top: 15px; display: block;"><strong>Saída:</strong></label><textarea rows="2" placeholder="O resultado deve ser em formato [especificar]..."></textarea>
+                            <label style="margin-top: 15px; display: block;"><strong>Parâmetros:</strong></label><textarea rows="2" placeholder="Considera [restrições regulamentares/orçamentais/temporais]..."></textarea>
+                        </div>
+                    </div>
+                    <div class="interactive-exercise" style="margin-top: 20px;">
+                        <h4>💡 Dicas de Personalização por Função:</h4>
+                        <ul style="margin: 10px 0; padding-left: 25px;">
+                            <li><strong>Diretor Financeiro:</strong> "considerando normas SNC-ESNL e rácios de liquidez..."</li>
+                            <li><strong>Gestor RH:</strong> "respeitando código trabalho português e acordo coletivo..."</li>
+                            <li><strong>Dir. Operações:</strong> "optimizando para ISO 9001 e lean manufacturing..."</li>
+                            <li><strong>Dir. Comercial:</strong> "alinhado com estratégia omnichannel e CRM Salesforce..."</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🔄 Refinamento Iterativo</h2>
+                        <span class="activity-time">5 minutos</span>
+                    </div>
+                    <h3>3 Técnicas de Melhoria:</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: 8px;"><h4>1. Exemplos +/-</h4><p>Adicione o que QUER e o que NÃO quer no resultado</p></div>
+                        <div style="background: #e3f2fd; padding: 20px; border-radius: 8px;"><h4>2. Perguntas Primeiro</h4><p>"Antes de responder, faz 3 perguntas para clarificar..."</p></div>
+                        <div style="background: #fce4ec; padding: 20px; border-radius: 8px;"><h4>3. Raciocínio Explícito</h4><p>"Explica o teu raciocínio passo-a-passo antes da resposta final"</p></div>
+                    </div>
+                </div>
+                <div class="module-navigation-footer">
+                    <button class="btn-secondary" onclick="showModule(3)">&larr; Módulo Anterior</button>
+                    <button class="btn-primary" onclick="showModule(5)">Próximo Módulo &rarr;</button>
+                </div>
+            </div>
+            
+            <!-- Módulo 5 -->
+            <div class="module-content" id="module5">
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🔮 Visualização Estratégica</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <div class="interactive-exercise">
+                        <p style="font-size: 18px; text-align: center; margin: 20px 0;">"Feche os olhos por 10 segundos e imagine o seu dia de trabalho daqui a 6 meses, já com estas ferramentas integradas..."</p>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                            <h4>Partilhe com o colega ao lado:</h4><p>Que mudança concreta visualizou?</p>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">70%</span>
+                        <p>redução no tempo de preparação de propostas</p>
+                        <small>(Deloitte, 2024)</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">⚠️ O Lado B - Riscos e Armadilhas</h2>
+                        <span class="activity-time">4 minutos</span>
+                    </div>
+                    <div class="risk-matrix">
+                        <div class="risk-item"><h4>🔒 Confidencialidade</h4><p>Dados em versões gratuitas</p><small>Solução: Versões enterprise</small></div>
+                        <div class="risk-item"><h4>🤖 Sobre-dependência</h4><p>Deixar de validar outputs</p><small>Solução: Sempre revisar</small></div>
+                        <div class="risk-item"><h4>😰 Resistência Equipas</h4><p>Medo de substituição</p><small>Solução: Comunicar valor</small></div>
+                    </div>
+                    <div style="background: #fff3cd; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                        <p><strong>Caso Real Lisboa:</strong> Empresa inseriu dados clientes no ChatGPT free - vazamento potencial</p>
+                        <p><strong>Caso Real Braga:</strong> Gestor não reviu contrato IA - erro custou 50.000€</p>
+                        <p><strong>Caso Real Porto:</strong> Introdução súbita criou pânico - produtividade caiu 30%</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">🎁 Kit de Sobrevivência & Próximos Passos</h2>
+                        <span class="activity-time">3 minutos</span>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px;">
+                        <h3>📦 O que leva consigo:</h3>
+                        <ul style="margin: 20px 0; padding-left: 25px;">
+                            <li>✅ Template com 50 prompts testados para executivos</li>
+                            <li>✅ Guia visual "Quando usar qual IA"</li>
+                            <li>✅ Checklist segurança dados empresariais</li>
+                            <li>✅ Acesso comunidade LinkedIn exclusiva</li>
+                            <li>✅ Framework "AI Champions" para sua empresa</li>
+                        </ul>
+                        <div style="text-align: center; margin-top: 25px;">
+                            <button class="btn-primary" style="background: white; color: #667eea;" onclick="showToolkitView()">Aceder ao Kit Executivo Digital</button>
+                        </div>
+                    </div>
+                    <div class="canvas-container" style="margin-top: 20px;">
+                        <h3>🎯 Compromisso Público:</h3>
+                        <p style="font-size: 18px; text-align: center; margin: 20px 0;">"Até sexta-feira, implemento UM processo com IA. Apenas um."</p>
+                        <textarea rows="2" placeholder="Escreva aqui o SEU compromisso específico..."></textarea>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="activity-header">
+                        <h2 class="activity-title">💭 Provocação Final</h2>
+                        <span class="activity-time">30 segundos</span>
+                    </div>
+                    <div style="background: #2c3e50; color: white; padding: 30px; border-radius: 12px; text-align: center;">
+                        <h2 style="font-size: 28px; margin-bottom: 20px;">"Daqui a 2 anos, não vão competir com IA."</h2>
+                        <h2 style="font-size: 32px; color: #ffc107;">"Vão competir com pessoas que sabem usar IA."</h2>
+                        <p style="font-size: 20px; margin-top: 20px; opacity: 0.9;">A escolha de começar hoje ou amanhã... é vossa.</p>
+                    </div>
+                </div>
+                <div class="module-navigation-footer">
+                     <button class="btn-secondary" onclick="showModule(4)">&larr; Módulo Anterior</button>
+                     <button class="btn-primary" onclick="showToolkitView()">Aceder ao Kit Digital &rarr;</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Toolkit Container -->
+    <div id="toolkit-container">
+         <div class="container">
+            <div class="header">
+                 <button class="btn-primary" style="position: absolute; top: 40px; left: 40px; background-color: white; color: #2a5298;" onclick="showSessionView()">&larr; Voltar à Sessão</button>
+                <h1>🚀 Kit Executivo de IA Generativa</h1>
+                <p>Recursos Práticos para Implementação Imediata</p>
+                 <div style="margin-top: 20px; font-size: 1rem; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px;">
+                    <p><strong>Curso:</strong> PGL39 | <strong>Data:</strong> 25 de junho de 2025</p>
+                    <p><strong>Formador:</strong> Daniel Ferreira Polónia</p>
+                </div>
+            </div>
+            
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="showTab('prompts')">📝 50 Prompts Executivos</button>
+                <button class="tab-btn" onclick="showTab('guide')">🎯 Guia Visual IA</button>
+                <button class="tab-btn" onclick="showTab('security')">🔒 Checklist Segurança</button>
+                <button class="tab-btn" onclick="showTab('linkedin')">💼 Comunidade LinkedIn</button>
+                <button class="tab-btn" onclick="showTab('champions')">🏆 Framework AI Champions</button>
+            </div>
+            
+            <!-- Tab 1: 50 Prompts -->
+            <div class="tab-content active" id="prompts">
+                <div class="section">
+                    <h2>📝 50 Prompts Testados para Executivos</h2>
+                    <p style="margin-bottom: 20px;">Baseados em casos reais de executivos portugueses e otimizados para resultados imediatos.</p>
+                    
+                    <h3>🎯 Estratégia e Planeamento (10 prompts)</h3>
+                    <div class="prompt-card"><span class="prompt-category">ESTRATÉGIA</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>1. Análise SWOT Contextualizada</strong><p>Atua como consultor estratégico sénior. Realiza uma análise SWOT para uma empresa [setor] portuguesa com [X] colaboradores que pretende [objetivo]. Considera o contexto económico português atual, regulamentações EU, e apresenta 3 oportunidades específicas para 2025. Formato: tabela executiva com bullet points acionáveis.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">ESTRATÉGIA</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>2. Roadmap de Transformação Digital</strong><p>Como especialista em transformação digital com experiência em PMEs portuguesas, cria um roadmap de 18 meses para digitalização de uma empresa [setor] com orçamento de [X]€. Inclui: quick wins primeiro trimestre, marcos principais, métricas de sucesso, e alinhamento com PRR/Portugal 2030. Estrutura em 3 fases com dependencies claras.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">ESTRATÉGIA</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>3. Análise Competitiva Ibérica</strong><p>Analisa o posicionamento competitivo de uma empresa [descrição] face a 3 principais concorrentes no mercado ibérico. Foca em: proposta de valor diferenciadora, gaps de mercado não explorados, e 5 ações prioritárias para ganhar quota de mercado. Considera diferenças culturais PT/ES e regulamentações específicas.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">PLANEAMENTO</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>4. OKRs para Equipas</strong><p>Desenvolve OKRs trimestrais para departamento de [área] com [X] pessoas. Objetivo principal: [objetivo]. Cria 1 objective inspirador e 3-4 key results mensuráveis. Inclui: baseline atual, target ambicioso mas alcançável, e sugestões de tracking semanal. Alinha com metodologia OKR de John Doerr.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">PLANEAMENTO</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>5. Plano de Contingência</strong><p>Cria plano de contingência para [situação crítica] numa empresa [setor]. Estrutura: 1) Identificação de riscos (probabilidade x impacto), 2) Triggers de ativação, 3) Ações imediatas (primeiras 48h), 4) Comunicação stakeholders, 5) Recursos necessários. Formato executivo 1 página A4.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">ESTRATÉGIA</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>6. Expansão Internacional</strong><p>Como consultor especializado em internacionalização de PMEs portuguesas, avalia viabilidade de expansão para [país]. Analisa: barreiras entrada, adaptações produto/serviço necessárias, investimento estimado, ROI esperado 3 anos. Inclui matriz go/no-go com 10 critérios ponderados.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">PLANEAMENTO</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>7. Sprint Planning Ágil</strong><p>Estrutura um sprint de 2 semanas para equipa de [X] pessoas trabalhando em [projeto]. Define: sprint goal claro, user stories priorizadas (MoSCoW), capacidade da equipa em story points, daily standup structure, e métricas de sucesso. Adapta Scrum ao contexto empresarial português.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">ESTRATÉGIA</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>8. Análise de Cenários</strong><p>Desenvolve 3 cenários estratégicos (otimista/realista/pessimista) para [situação] nos próximos 12 meses. Para cada cenário: premissas-chave, impacto financeiro estimado, ações recomendadas, early warning indicators. Formato: dashboard executivo visual.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">PLANEAMENTO</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>9. Governance de Projeto</strong><p>Estabelece estrutura de governance para projeto de [tipo] com budget [X]€ e duração [Y] meses. Inclui: RACI matrix, cadência de steering committees, KPIs de projeto, escalation path, e templates de reporte. Adapta às práticas portuguesas de gestão.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">ESTRATÉGIA</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>10. Estratégia ESG</strong><p>Cria estratégia ESG para empresa [setor] alinhada com regulamentações EU e expectativas stakeholders portugueses. Foca em: quick wins de sustentabilidade, métricas de impacto social, governance improvements. Inclui roadmap 2025-2027 e potenciais certificações.</p></div>
+                    
+                    <h3>💼 Operações e Processos (10 prompts)</h3>
+                    <div class="prompt-card"><span class="prompt-category">OPERAÇÕES</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>11. Otimização de Processos</strong><p>Como especialista em Lean Six Sigma, analisa o processo de [processo específico] que atualmente demora [X] horas/dias. Identifica: bottlenecks principais, desperdícios (7 tipos Lean), quick wins de automação, e propõe novo fluxo otimizado. Meta: reduzir tempo em 30%. Inclui SIPOC diagram.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">OPERAÇÕES</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>12. SOP - Procedimento Operacional</strong><p>Cria Standard Operating Procedure (SOP) para [tarefa/processo] em português. Estrutura: 1) Objetivo e âmbito, 2) Responsabilidades, 3) Passo-a-passo detalhado com screenshots/diagramas, 4) Troubleshooting comum, 5) KPIs de controlo. Formato: documento A4 máximo 3 páginas.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">PROCESSOS</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>13. Auditoria de Eficiência</strong><p>Realiza auditoria de eficiência operacional para departamento de [área]. Analisa: utilização de recursos, tempos de ciclo, retrabalho, custos ocultos. Apresenta findings em matriz impacto x esforço com 10 recomendações priorizadas. Inclui quick calculation de ROI para top 3.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">OPERAÇÕES</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>14. Gestão de Fornecedores</strong><p>Desenvolve sistema de avaliação e gestão de fornecedores para empresa com [X] fornecedores ativos. Cria: critérios de avaliação ponderados, scorecard trimestral, processo de onboarding, e plano de desenvolvimento de fornecedores estratégicos. Considera regulamentações portuguesas de procurement.</p></div>
+                    <div class="prompt-card"><span class="prompt-category">PROCESSOS</span><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button><strong>15. Mapa de Fluxo de Valor</strong><p>Cria Value Stream Map para o processo de [processo] desde [início] até [fim]. Identifica: tempos de valor agregado vs desperdício, pontos de inventário, fluxo de informação. Propõe estado futuro com melhorias específicas e potencial de redução de lead time.</p></div>
+                     <!-- Additional Prompts can be added here -->
+                </div>
+            </div>
+            
+            <!-- Tab 2: Guia Visual -->
+            <div class="tab-content" id="guide">
+                <div class="section">
+                    <h2>🎯 Guia Visual: Quando Usar Qual IA</h2>
+                    <p style="margin-bottom: 30px;">Baseado em análise comparativa de +1000 casos de uso empresariais (2024-2025)</p>
+                    <div class="comparison-visual">
+                        <div class="ai-card" style="background: linear-gradient(135deg, #00A67E 0%, #00916F 100%);"><h3>ChatGPT</h3><p style="margin-bottom: 20px;">O Generalista Versátil</p><ul class="feature-list"><li><strong>Melhor para:</strong></li><li>Estruturação de ideias</li><li>Código e queries SQL</li><li>Brainstorming criativo</li><li>Traduções técnicas</li><li>Templates e modelos</li><li><strong>Limitações:</strong></li><li>Conhecimento até 2023</li><li>Contexto: ~4000 palavras</li><li>Sem acesso web (free)</li></ul><button class="btn-primary" style="margin-top: 20px;" onclick="openAITool('chatgpt')">Abrir ChatGPT</button></div>
+                        <div class="ai-card" style="background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%);"><h3>Claude</h3><p style="margin-bottom: 20px;">O Analista Detalhista</p><ul class="feature-list"><li><strong>Melhor para:</strong></li><li>Análise documentos longos</li><li>Revisão contratos</li><li>Pesquisa aprofundada</li><li>Escrita académica</li><li>Raciocínio complexo</li><li><strong>Limitações:</strong></li><li>Mensagens/dia limitadas</li><li>Sem features visuais</li><li>Mais conservador</li></ul><button class="btn-primary" style="margin-top: 20px;" onclick="openAITool('claude')">Abrir Claude</button></div>
+                        <div class="ai-card" style="background: linear-gradient(135deg, #4285F4 0%, #3367D6 100%);"><h3>Gemini</h3><p style="margin-bottom: 20px;">O Integrador Google</p><ul class="feature-list"><li><strong>Melhor para:</strong></li><li>Pesquisa web atual</li><li>Análise imagens</li><li>Integração G-Suite</li><li>Dados em tempo real</li><li>Respostas multimodais</li><li><strong>Limitações:</strong></li><li>Menos criativo</li><li>Respostas mais curtas</li><li>Interface básica</li></ul><button class="btn-primary" style="margin-top: 20px;" onclick="openAITool('gemini')">Abrir Gemini</button></div>
+                    </div>
+                     <div class="section" style="margin-top: 40px;">
+                        <h3>💡 Técnicas Avançadas por Ferramenta</h3>
+                        <div class="grid-2">
+                            <div style="background: #e8f5e9; padding: 20px; border-radius: 8px;"><h4>ChatGPT - Técnicas Pro</h4><ul style="margin-top: 10px; padding-left: 20px;"><li>Use "Let's think step by step" para raciocínio complexo</li><li>Peça múltiplas versões: "Dá-me 3 abordagens diferentes"</li></ul></div>
+                            <div style="background: #fff3cd; padding: 20px; border-radius: 8px;"><h4>Claude - Técnicas Pro</h4><ul style="margin-top: 10px; padding-left: 20px;"><li>Use XML tags para estruturar inputs complexos</li><li>Forneça exemplos do formato desejado</li></ul></div>
+                            <div style="background: #e3f2fd; padding: 20px; border-radius: 8px;"><h4>Gemini - Técnicas Pro</h4><ul style="margin-top: 10px; padding-left: 20px;"><li>@Google para pesquisas em tempo real</li><li>Upload imagens para análise visual</li></ul></div>
+                            <div style="background: #fce4ec; padding: 20px; border-radius: 8px;"><h4>Todos - Regras de Ouro</h4><ul style="margin-top: 10px; padding-left: 20px;"><li>Seja específico: contexto > brevidade</li><li>Itere: primeiro draft nunca é final</li></ul></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 3: Checklist Segurança -->
+            <div class="tab-content" id="security">
+                <div class="section">
+                    <h2>🔒 Checklist de Segurança para Dados Empresariais</h2>
+                     <p style="margin-bottom: 30px;">Baseado em ISO 27001, RGPD e melhores práticas de cibersegurança para IA (2025)</p>
+                    <h3>🚨 Checklist Pré-Utilização (OBRIGATÓRIO)</h3>
+                    <div class="checklist-item"><input type="checkbox" id="check1"><label for="check1"><strong>Classificar os dados:</strong> Os dados são públicos, internos, confidenciais ou secretos?</label><span class="risk-level risk-high">CRÍTICO</span></div>
+                    <div class="checklist-item"><input type="checkbox" id="check2"><label for="check2"><strong>Verificar política empresa:</strong> A política de segurança permite uso de IA para estes dados?</label><span class="risk-level risk-high">CRÍTICO</span></div>
+                    <div class="checklist-item"><input type="checkbox" id="check3"><label for="check3"><strong>Anonimizar dados sensíveis:</strong> Remover nomes, NIFs, emails, dados financeiros específicos</label><span class="risk-level risk-high">CRÍTICO</span></div>
+                    <div class="checklist-item"><input type="checkbox" id="check4"><label for="check4"><strong>Escolher versão adequada:</strong> Usar versão Enterprise para dados confidenciais (não versões gratuitas)</label><span class="risk-level risk-high">CRÍTICO</span></div>
+                    <div class="section" style="margin-top: 40px; background: #fff3cd; border: 2px solid #ffc107;">
+                        <h3>⚠️ Red Flags - NUNCA Fazer</h3>
+                        <ul style="margin: 20px; padding-left: 20px; color: #856404;">
+                            <li>❌ Upload de bases de dados completas de clientes</li>
+                            <li>❌ Partilhar estratégias de pricing confidenciais</li>
+                            <li>❌ Incluir conversas de email sem autorização</li>
+                            <li>❌ Partilhar informação de M&A ou IPO antes de ser pública</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 4: LinkedIn -->
+            <div class="tab-content" id="linkedin">
+                <div class="linkedin-box">
+                    <h2>💼 Comunidade LinkedIn Exclusiva</h2>
+                    <h3 style="margin: 20px 0;">"AI Executives Portugal - AESE Alumni"</h3>
+                    <p style="font-size: 18px; margin-bottom: 30px;">Rede privada para líderes comprometidos com a transformação através de IA</p>
+                    <button class="btn-primary" onclick="window.open('https://www.linkedin.com/groups/13018820/', '_blank')">Solicitar Acesso à Comunidade</button>
+                </div>
+                 <div class="section" style="margin-top: 30px;">
+                    <h3>🎯 O Que Encontra na Comunidade</h3>
+                    <div class="grid-2">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;"><h4>📊 Casos de Sucesso Semanais</h4><p>Implementações reais de IA em empresas portuguesas, com métricas e lições aprendidas</p></div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;"><h4>🤝 Peer Advisory Groups</h4><p>Grupos de 6-8 executivos do mesmo setor para discussão de desafios específicos</p></div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;"><h4>🎓 Masterclasses Mensais</h4><p>Sessões avançadas com especialistas internacionais (1ª quinta-feira do mês)</p></div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;"><h4>🔧 Prompt Library Colaborativa</h4><p>Base de dados de prompts testados e validados pela comunidade</p></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 5: AI Champions Framework -->
+            <div class="tab-content" id="champions">
+                <div class="section">
+                     <h2>🏆 Framework "AI Champions" para a Sua Empresa</h2>
+                     <p style="margin-bottom: 30px;">Modelo testado para criar uma cultura de inovação com IA, adaptado à realidade portuguesa</p>
+                    <div class="framework-phase"><span class="phase-number">1</span><h4>Fase 1: Identificação e Recrutamento (Semanas 1-2)</h4><p><strong>Objetivo:</strong> Selecionar 1 champion por cada 50 colaboradores</p></div>
+                    <div class="framework-phase"><span class="phase-number">2</span><h4>Fase 2: Capacitação Intensiva (Semanas 3-4)</h4><p><strong>Objetivo:</strong> Formar champions como multiplicadores internos</p></div>
+                    <div class="framework-phase"><span class="phase-number">3</span><h4>Fase 3: Ativação e Suporte (Meses 2-3)</h4><p><strong>Objetivo:</strong> Champions ativos como agentes de mudança</p></div>
+                    <div class="framework-phase"><span class="phase-number">4</span><h4>Fase 4: Escala e Sustentação (Meses 4-6)</h4><p><strong>Objetivo:</strong> Criar momentum autossustentável</p></div>
+                </div>
+            </div>
+             <div class="download-section">
+                <h2>📥 Download Completo do Kit</h2>
+                <p style="margin: 20px 0;">Pode guardar esta página como PDF para consulta offline.</p>
+                <button class="btn-primary" onclick="window.print()">Imprimir/Guardar Página como PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p><strong>Daniel Ferreira Polónia</strong></p>
+        <p>dpolonia@gmail.com | 96.2654017</p>
+    </div>
+    
+    <script>
+        // --- GLOBAL STATE & CONTROLS ---
+        const sessionContainer = document.getElementById('session-container');
+        const toolkitContainer = document.getElementById('toolkit-container');
+
+        function showSessionView() {
+            toolkitContainer.style.display = 'none';
+            sessionContainer.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function showToolkitView() {
+            sessionContainer.style.display = 'none';
+            toolkitContainer.style.display = 'block';
+            showTab('prompts'); // Start on the first tab
+            window.scrollTo(0, 0);
+        }
+
+        // --- SESSION-SPECIFIC SCRIPT ---
+        let timeLeft = 75 * 60;
+        let timerInterval;
+        let isPaused = false;
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerEl = document.getElementById('timer');
+            if(timerEl) {
+                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            if (timeLeft > 0 && !isPaused) {
+                timeLeft--;
+            }
+        }
+        
+        function toggleTimer(event) {
+            isPaused = !isPaused;
+            if (event && event.target) {
+                event.target.textContent = isPaused ? 'Retomar' : 'Pausar';
+            }
+        }
+        
+        function showModule(moduleNumber) {
+            document.querySelectorAll('#session-container .module-content').forEach(module => module.classList.remove('active'));
+            document.querySelectorAll('#session-container .module-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('#session-container .progress-step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index < moduleNumber - 1) step.classList.add('completed');
+                else if (index === moduleNumber - 1) step.classList.add('active');
+            });
+            
+            const activeModule = document.getElementById(`module${moduleNumber}`);
+            if(activeModule) activeModule.classList.add('active');
+
+            const activeBtn = document.querySelectorAll('#session-container .module-btn')[moduleNumber - 1];
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+        
+        // --- TOOLKIT-SPECIFIC SCRIPT ---
+        function showTab(tabName) {
+            document.querySelectorAll('#toolkit-container .tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('#toolkit-container .tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            const activeTab = document.getElementById(tabName);
+            if(activeTab) activeTab.classList.add('active');
+
+            const tabIndex = ['prompts', 'guide', 'security', 'linkedin', 'champions'].indexOf(tabName);
+            const activeBtn = document.querySelectorAll('#toolkit-container .tab-btn')[tabIndex];
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+
+        // --- SHARED SCRIPT ---
+        function copyToClipboard(button) {
+            const parentBox = button.parentElement;
+            let textToCopy = '';
+
+            if (parentBox.classList.contains('prompt-box')) {
+                 textToCopy = parentBox.innerText.replace(/Copiar|Copiar Template/gi, '').trim();
+            } else if (parentBox.classList.contains('prompt-card')) {
+                const pElements = parentBox.querySelectorAll('p');
+                textToCopy = Array.from(pElements).map(el => el.textContent).join('\n').trim();
+            }
+
+            if (textToCopy) {
+                 navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = '✓ Copiado!';
+                    button.style.background = '#4caf50';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#2a5298';
+                    }, 2000);
+                }, () => {
+                   // Fallback for browsers that don't support clipboard API well in iframes
+                   alert('Não foi possível copiar automaticamente. Por favor, selecione e copie o texto manualmente.');
+                });
+            }
+        }
+        
+        function openAITool(tool) {
+            const urls = {
+                'chatgpt': 'https://chat.openai.com',
+                'claude': 'https://claude.ai',
+                'gemini': 'https://gemini.google.com'
+            };
+            if (urls[tool]) {
+                window.open(urls[tool], '_blank');
+            }
+        }
+        
+        // --- INITIALIZATION & EVENT LISTENERS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start session timer
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Auto-save textarea content
+            document.querySelectorAll('textarea').forEach(textarea => {
+                const placeholder = textarea.getAttribute('placeholder');
+                if(!placeholder) return;
+                const savedKey = `ai-session-${placeholder.substring(0, 30)}`;
+                const saved = localStorage.getItem(savedKey);
+                if (saved) {
+                    textarea.value = saved;
+                }
+                textarea.addEventListener('input', (e) => {
+                    localStorage.setItem(savedKey, e.target.value);
+                });
+            });
+
+            // Auto-save checklist state
+            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+                const savedState = localStorage.getItem(`security-check-${checkbox.id}`);
+                if (savedState === 'true') checkbox.checked = true;
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(`security-check-${checkbox.id}`, checkbox.checked);
+                });
+            });
+            
+            // Keyboard shortcuts for modules
+            document.addEventListener('keydown', (e) => {
+                if (sessionContainer.style.display !== 'none' && e.key >= '1' && e.key <= '5') {
+                    if (document.activeElement.tagName !== 'TEXTAREA') {
+                        e.preventDefault();
+                        showModule(parseInt(e.key));
+                    }
+                }
+            });
+
+            // Set initial views
+            showSessionView();
+        });
+    </script>
+</body>
+</html>
